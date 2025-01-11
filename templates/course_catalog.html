@@ -1,21 +1,13 @@
-<!-- {% extends "base.html" %}
+{% exten{% extends "base.html" %}
+
 {% block content %}
 <h2>Course Catalog</h2>
 <ul>
     {% for course in courses %}
-        <li><a href="{{ url_for('course_details', code=course['code']) }}">{{ course.name }}</a> - {{ course.code }}</li>
-    {% endfor %}
-</ul>
-{% endblock %} -->
-
-<h1>Course Catalog</h1>
-<ul>
-    {% for course in courses %}
-    <li>
-        <a href="{{ url_for('course_details', code=course['code']) }}">{{ course['course_name'] }}</a>
-    </li>
+        <li>
+            <a href="{{ url_for('course_details', code=course['code']) }}">{{ course['course_name'] }}</a> - {{ course['code'] }}
+        </li>
     {% endfor %}
 </ul>
 <a href="{{ url_for('add_course') }}">Add a New Course</a>
-
-
+{% endblock %}
