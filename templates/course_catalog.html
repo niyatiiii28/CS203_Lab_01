@@ -2,6 +2,8 @@
 
 {% block content %}
 <h2>Course Catalog</h2>
+
+<!-- List of courses -->
 <ul>
     {% for course in courses %}
         <li>
@@ -9,5 +11,8 @@
         </li>
     {% endfor %}
 </ul>
-<a href="{{ url_for('add_course') }}">Add a New Course</a>
+
+<!-- Button to add a new course -->
+<a href="{{ url_for('add_course') }}"><button>Add a New Course</button></a>
+
 {% endblock %}
