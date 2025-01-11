@@ -1,18 +1,12 @@
 {% extends "base.html" %}
-
 {% block content %}
 <h2>Course Catalog</h2>
-
-<!-- List of courses -->
 <ul>
     {% for course in courses %}
-        <li>
-            <a href="{{ url_for('course_details', code=course['code']) }}">{{ course['course_name'] }}</a> - {{ course['code'] }}
-        </li>
+        <li><a href="{{ url_for('course_details', code=course['code']) }}">{{ course.name }}</a> - {{ course.code }}</li>
     {% endfor %}
 </ul>
-
-<!-- Button to add a new course -->
-<a href="{{ url_for('add_course') }}"><button>Add a New Course</button></a>
-
+<a href="{{ url_for('add_course') }}">
+    <button>Add a New Course</button>
+</a>
 {% endblock %}
