@@ -55,8 +55,26 @@ def add_course():
         course_code = request.form.get('code')
 
         # Validation
-        if not all([course_name, instructor, semester, course_code]):
-            flash("All fields are required!", "error")
+        missing_fields = []
+        if not course_name:
+            missing_fields.append("Course Name")
+        if not instructor:
+            missing_fields.append("Instructor")
+        if not semester:
+            missing_fields.append("Semester")
+        if not course_code:
+            missing_fields.append("Course Code")
+
+        if missing_fields:
+            flash(f"Missing required fields: {', '.join(missing_fields)}", "error")
+            logging.error(f"Form submission failed: Missing fields - {', '.join(missing_fields)}")
+            return redirect(url_for('add_course'))
+
+        # Check for duplicate course code
+        courses = load_courses()
+        if any(course['code'] == course_code for course in courses):
+            flash(f"A course with code '{course_code}' already exists!", "error")
+            logging.error(f"Duplicate course code: {course_code}")
             return redirect(url_for('add_course'))
 
         # Save the new course
@@ -67,9 +85,10 @@ def add_course():
             'code': course_code
         })
         flash(f"Course '{course_name}' added successfully!", "success")
+        logging.info(f"New course added: {course_name} (Code: {course_code}) by {instructor} for {semester}")
         return redirect(url_for('course_catalog'))
+
     return render_template('add_course.html')
 
-
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0',port=5000)
