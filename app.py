@@ -1,12 +1,20 @@
 import json
 import os
 from flask import Flask, render_template, request, redirect, url_for, flash
+import logging
+
+
+# Configure logging
+logging.basicConfig(
+    filename='app.log',  # Log file name
+    level=logging.INFO,  # Log level (use logging.ERROR for only errors)
+    format='%(asctime)s - %(levelname)s - %(message)s'  # Log format
+)
 
 # Flask App Initialization
 app = Flask(__name__)
 app.secret_key = 'secret'
 COURSE_FILE = 'course_catalog.json'
-
 
 # Utility Functions
 def load_courses():
